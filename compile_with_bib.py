@@ -47,7 +47,7 @@ os.chdir(folder)
 # os.chdir(os.path.join(folder, "latex_products"))
 
 full_latex_files_subfolder = os.path.join(folder, latex_files_subfolder)
-if not os.exists(full_latex_files_subfolder):
+if not os.path.exists(full_latex_files_subfolder):
     os.makedirs(full_latex_files_subfolder)
 
 print("Input Fullname: {}".format(original_fullname))
