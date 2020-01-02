@@ -10,6 +10,8 @@ I was tired of the manual export while working in Scrivener, which meant I didn'
 First, these scripts likely won't be 100% of what anyone else needs. I only made them somewhat generalizable and they're not my best code, but they're good enough to share in case anyone else finds them useful. I tried to comment at least the most important things. You may need to do some tweaking, but **these scripts should be a good starting point for people looking to quickly compile LaTeX documents from Scrivener on Windows**.
 
 ## Setup
+You'll need both AutoHotkey 1 and Python 3 on your computer in order to run this full pipeline. Autohotkey handles the Scrivener export and Python handles the LaTeX runs, so install whichever you need if you're not going to use all of this code.
+
 1. Make sure your Scrivener compile dialog is set up the way you want it - this just exports the settings you had the previous time you compiled
 2. Download both the .ahk and .py scripts in this repository.
 3. Configure the variables at the top of both scripts in your text editor of choice - each one has paths specific to the projects you're working on, where your LaTeX installation is, etc, that you'll need to edit to match your computer.
