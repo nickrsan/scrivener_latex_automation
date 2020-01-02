@@ -16,6 +16,7 @@ You'll need both AutoHotkey 1 and Python 3 on your computer in order to run this
 2. Download both the .ahk and .py scripts in this repository.
 3. Configure the variables at the top of both scripts in your text editor of choice - each one has paths specific to the projects you're working on, where your LaTeX installation is, etc, that you'll need to edit to match your computer.
 3. Run the .ahk script with AutoHotKey - a macro utility for Windows. The script will automatically go through the keystrokes/typing/clicking needed to export for you. This script was written and tested with AutoHotkey 1.1.32 on Windows 10 using the Scrivener 3 Beta.
+4. As an example of where this isn't coded to *just work* everywhere, you may need to adjust the delay timings between major steps in the autohotkey script. On my computer, they work well in most cases when my computer is plugged in, but on battery and slower power profiles, they don't work. I keep the timings tight so that it's not a big wait for compilation, but you'll have to find your own compromise between quick compiles and failures because dialogs don't exist at the right time.
 
 ## Usage
 Once it runs, you can use the keystroke Ctrl Shift C to run the whole pipeline and the keystroke Ctrl Shift L to just run the LaTeX compilation. The latter command is for the situation where LaTeX failed, but you don't need to re-export from Scrivener.
