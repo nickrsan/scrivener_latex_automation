@@ -28,6 +28,18 @@ basename = sys.argv[1]
 fullname = sys.argv[2]
 sync_tex_option = "-synctex=1"  # sys.argv[3]
 
+
+# remove the extra scrivener IDs it places in there to reduce warnings
+removal = "scrivauto:<$linkID>"
+
+def remove_lines(file_to_process, removal = removal):
+    with open(file_to_process, 'r') as input_file:
+        input_lines = input_file.readlines()
+        processed_lines = [line for line in input_lines if not removal in line] 
+    with open(file_to_process, 'w') as output_file:
+        output_file.writelines(processed_lines)
+
+
 original_fullname = fullname
 rename = False
 # Do some parameter reworking to make sure it's always a .tex file
@@ -53,9 +65,12 @@ if not os.path.exists(full_latex_files_subfolder):
 print("Input Fullname: {}".format(original_fullname))
 print("Processed Fullname: {}".format(fullname))
 
+remove_lines(fullname, removal)  # run the removal code
+
 commands = [  # we'll run each of these - we run pdflatex->biber->pdflatex beacause if we don't do that, then bibliographies don't work
     ['pdflatex.exe', sync_tex_option, "-interaction=nonstopmode", fullname],
     ['biber.exe', os.path.splitext(basename)[0]],
+    ['pdflatex.exe', sync_tex_option, "-interaction=nonstopmode", fullname],
     ['pdflatex.exe', sync_tex_option, "-interaction=nonstopmode", fullname],
 ]
 
@@ -63,15 +78,16 @@ return_code = 0  # start with a normal return code
 for c in commands:  # run each command in order
     try:
         print(c)
-        output = subprocess.check_output(c)
+        output = subprocess.check_output(c, universal_newlines=True)
         print(output)
     except subprocess.CalledProcessError as exc:                                                                            
         print("error code, {}, {}".format(exc.returncode, exc.output))
         return_code = exc.returncode  # if we get any kind of exception, set it as our return code
                                         # but still try to run the rest
 
-print("Opening {}".format(basename.replace(".tex", ".pdf")))
-subprocess.Popen([pdf_reader, basename.replace(".tex", ".pdf")])  # open the PDF
+open_filename = os.path.join(folder, basename.replace(".tex", ".pdf"))
+print("Opening {}".format(open_filename))
+subprocess.Popen([pdf_reader, open_filename])  # open the PDF
 try:
     basename_noext = os.path.splitext(basename)[0]
     for potential_file in os.listdir(folder):
