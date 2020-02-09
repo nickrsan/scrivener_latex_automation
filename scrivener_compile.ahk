@@ -2,7 +2,8 @@ SetWorkingDir, C:\Users\your_username\your_working_folder  ; What folder do you 
 
 Python = python
 CompileScript = C:\path\to\compile_with_bib.py  ; Full path to python script in this repository
-FullOutputPath = C:\path\to\latest_autoexport.tex.txt  ; Full path to the exported scrivener LaTeX file. Scrivener currently ends everything in in .txt regardless of settings, so best to make the full path end in .txt
+FullOutputPath = C:\path\to\latest_autoexport.tex  ; Full path to the exported scrivener LaTeX file. Scrivener currently ends everything in in .txt regardless of settings, so best to make the full path end in .txt
+PythonInputPath =  C:\path\to\latest_autoexport\latest_autoexport.tex  ; Can be different because of Scrivener behavior that puts it in a subfolder of same name
 BaseName = latest_autoexport  ; not strictly necessary - my Python script uses it because TexMaker passes it in, so it can be compatible with both
 
 ^!c::  ; Ctrl Shift C to compile automatically.
@@ -25,7 +26,7 @@ BaseName = latest_autoexport  ; not strictly necessary - my Python script uses i
 	Send, {Enter}
 	Sleep, 200
 	Click, 418, 705, 0  ; Make sure we're clicking into the window - this should probably be adjusted
-	Sleep, 3500
+	Sleep, 4500
 	WinActivate, Save As Plain Text ahk_class #32770  ; activate the save as window once it comes up, enter the path.
 	Send %FullOutputPath%
 	Send, {Enter}
@@ -37,10 +38,10 @@ BaseName = latest_autoexport  ; not strictly necessary - my Python script uses i
 		Sleep, 200
 		Send, {Enter}
 	}
-	Sleep, 5000
-	Run %Python% %CompileScript% %BaseName% %FullOutputPath%   ; send the script over to python to compile
+	Sleep, 10000
+	Run %Python% %CompileScript% %BaseName% %PythonInputPath%   ; send the script over to python to compile
 	Return
 	
 ^!l::  ; enable ctrl shift l to compile only. This helps when I leave the PDF open and only this part fails.
-	Run %Python% %CompileScript% %BaseName% %FullOutputPath%
+	Run %Python% %CompileScript% %BaseName% %PythonInputPath%
 	Return
